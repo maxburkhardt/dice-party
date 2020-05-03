@@ -27,7 +27,7 @@ function validateName(name: string): boolean {
   return name.length >= 1;
 }
 
-function message(type: string, content: any): string {
+function message(type: string, content: MessageData): string {
   return JSON.stringify({ type: type, data: content });
 }
 

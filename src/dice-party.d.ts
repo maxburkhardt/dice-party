@@ -27,8 +27,10 @@ interface Roll {
 
 interface WsMessage {
   type: string;
-  data: RollMessage | MembershipMessage | InfoMessage | ErrorMessage;
+  data: MessageData;
 }
+
+type MessageData = RollMessage | MembershipMessage | InfoMessage | ErrorMessage;
 
 interface RollMessage {
   name: string;

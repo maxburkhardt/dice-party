@@ -1,0 +1,108 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!-- You might want to try something fancier: -->
+<!-- html/nunjucks docs: https://mozilla.github.io/nunjucks/ -->
+<!-- pug: https://pugjs.org/ -->
+<!-- haml: http://haml.info/ -->
+<!-- hbs(handlebars): http://handlebarsjs.com/ -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dice Party</title>
+    <meta name="description" content="A collaborative dice experience." />
+    <link
+      id="favicon"
+      rel="icon"
+      href="https://cdn.glitch.com/cd0a012a-fb94-4ade-a3b2-9e9cbb878495%2Fd20.png?v=1585102946625"
+      type="image/png"
+    />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- fonts -->
+    <link rel="stylesheet" href="https://use.typekit.net/qza5fnp.css" />
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css" />
+
+    <!-- import the webpage's client-side javascript file -->
+    <script src="/client.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>
+          Dice Party
+        </h1>
+      </header>
+
+      <div id="flash" style="display: none;" class="alert"></div>
+      <form id="joinForm" style="display: none;">
+        <p>
+          Enter a party identifer &mdash; some kind of word or phrase &mdash;
+          and make sure all your friends enter the same thing.
+        </p>
+
+        <input
+          name="party"
+          type="text"
+          maxlength="100"
+          placeholder="Party identifier"
+          aria-labelledby="party identifier"
+        />
+        <input
+          name="name"
+          type="text"
+          maxlength="100"
+          placeholder="Your name"
+          aria-labelledby="your name"
+        />
+        <button type="submit" id="partyUp">Party Up!</button>
+      </form>
+      <form id="rollForm" style="display: none;">
+        <p id="partyInfo" style="display: none;">
+          Current party: <span id="currentParty"></span>
+          <br />
+          Your name: <span id="nameOutput"></span>
+        </p>
+        <input
+          name="description"
+          type="text"
+          maxlength="280"
+          placeholder="Roll description"
+          aria-labelledby="roll description"
+          autofocus="true"
+        />
+        <button type="submit" id="roll">
+          Roll!
+        </button>
+      </form>
+      <div id="rollLog"></div>
+      <form id="leaveForm" style="display:none;">
+        <button type="submit" id="leaveParty">Leave Party</button>
+      </form>
+    </div>
+    <div
+      class="changePartyModalBackground"
+      style="display:none;"
+      id="changePartyModalBackground"
+    >
+      <div class="changePartyModal">
+        <p><span id="changePartyModalText"></span></p>
+        <form id="changePartyForm">
+          <button type="submit" id="stayInPartyModalButton">
+            Stay In Current Party
+          </button>
+          <button type="submit" id="leavePartyModalButton">Leave Party</button>
+        </form>
+      </div>
+    </div>
+    <!-- include the Glitch button to show what the webpage is about and
+          to make it easier for folks to view source and remix -->
+    <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
+    <script src="https://button.glitch.me/button.js"></script>
+  </body>
+</html>
