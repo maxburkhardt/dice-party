@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+      "sourceMap": true,
+      "esModuleInterop": true,
+      "downlevelIteration": true
+    },
+    "include": ["**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+  }
