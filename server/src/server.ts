@@ -4,7 +4,6 @@ import expressWs from "express-ws";
 import WsWebSocket from "ws";
 const { app } = expressWs(express());
 app.use(express.json());
-app.use(express.static("public"));
 
 // initialize storage
 import * as storage from "./storage";
@@ -67,25 +66,7 @@ function cleanPartyConnections() {
 }
 
 app.get("/", function (request, response) {
-  const xForwardedProtoHeader = request.headers["x-forwarded-proto"];
-  let xForwardedProto = "";
-  if (xForwardedProtoHeader instanceof Array) {
-    xForwardedProto = xForwardedProtoHeader[0];
-  } else {
-    xForwardedProto = xForwardedProtoHeader;
-  }
-  if (!xForwardedProto.startsWith("https")) {
-    response.redirect(
-      301,
-      "https://" + request.headers["x-forwarded-host"] + "/"
-    );
-  } else {
-    response.set(
-      "Strict-Transport-Security",
-      "max-age=31536000; includeSubDomains"
-    );
-    response.sendFile(__dirname + "/views/index.html");
-  }
+  response.send("Welcome to the dice party!");
 });
 
 app.post("/join", async function (request, response) {
@@ -212,7 +193,7 @@ app.ws("/party", function (ws, response) {
   */
 });
 
-var listener = app.listen(process.env.PORT, function () {
+app.listen(process.env.PORT, function () {
   console.log("The dice party is ready!");
 });
 

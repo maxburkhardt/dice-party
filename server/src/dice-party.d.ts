@@ -1,10 +1,3 @@
-interface PlayerState {
-  inParty: boolean;
-  partyId: string;
-  connectionId: string;
-  name?: string;
-}
-
 interface Party {
   id: string;
   startTime: number;

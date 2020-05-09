@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+body, input, button {
+  font-family: fira-sans, helvetica, arial, sans-serif;
+  font-weight: 400;
+}
+
+h1 {
+  font-family: boucherie-block, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 36pt;
+  margin: 10px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+p {
+  margin-top: 0px;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 400px;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.alert {
+  padding: 5px;
+}
+
+#rollLog {
+  overflow: scroll;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 0 10px;
+}
+
+form {
+  margin-bottom: 25px;
+  padding: 15px;
+  display: inline-block;
+  width: 100%;
+  border-radius: 3px;
+  background-image: url("https://cdn.glitch.com/cd0a012a-fb94-4ade-a3b2-9e9cbb878495%2Ffull-bloom.png?v=1585105784727");
+  background-repeat: repeat;
+}
+
+input {
+  display: block;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+button {
+  font-size: 16px;
+  border-radius: 3px;
+  background-color: #eee;
+  border: 1px solid #777;
+  box-shadow: 2px 2px #aaa;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+button:active {
+  box-shadow: none;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+footer {
+  margin-top: 50px;
+  padding-top: 25px;
+  border-top: 1px solid lightgrey;
+}
+
+.alert {
+  background-color: #ffa1a1;
+}
+
+.changePartyModalBackground {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background: gray;
+  background: rgba(128, 128, 128, 0.7);
+}
+
+.changePartyModal {
+  width: 300px;
+  height: 300px;
+  margin: 30px auto;
+  border: 1px solid #000;
+  padding: 10px;
+  background: #fff;
+}
