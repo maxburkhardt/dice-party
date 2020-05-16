@@ -1,13 +1,11 @@
 import React from "react";
 
-export type RollLogEntry = {};
-
 export type Props = {
-  entries: RollLogEntry[];
+  entries: JSX.Element[];
 };
 
 function RollLog(props: Props) {
-  return <div></div>;
+  return <div>{props.entries}</div>;
 }
 
 export default RollLog;

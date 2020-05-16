@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import { roll } from "../partyApi";
 
 export type Props = {
   visible: boolean;
   partyId: string;
+  sessionId: string;
   name: string;
+  warnCallback: (message: string) => void;
 };
 
 function RollForm(props: Props) {
+  const [description, setDescription] = useState("");
+
+  async function handleRoll(event: React.SyntheticEvent) {
+    event.preventDefault();
+    const response = await roll(props.sessionId, description);
+    if (!response.success) {
+      props.warnCallback(response.message || "Unknown roll error");
+    }
+  }
+
   if (props.visible) {
     return (
       <form>
@@ -21,8 +34,12 @@ function RollForm(props: Props) {
           maxLength={280}
           placeholder="Roll description"
           autoFocus={true}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
-        <button type="submit">Roll!</button>
+        <button type="submit" onClick={handleRoll}>
+          Roll!
+        </button>
       </form>
     );
   } else {

@@ -1,49 +1,37 @@
 import React, { useState } from "react";
-import { setPlayerState } from "../localState";
+import { setPlayerState, PlayerState } from "../localState";
+import { join } from "../partyApi";
 
 export type Props = {
   visible: boolean;
   warnCallback: (message: string) => void;
+  setPlayerStateCallback: (newState: PlayerState) => void;
 };
-
-async function postData(path: string, data: any) {
-  return fetch(path, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  }).then((response) => {
-    return response.json();
-  });
-}
-
-function joinParty(
-  partyId: string,
-  name: string,
-  warnCallback: (message: string) => void
-) {
-  postData("/join", { partyId: partyId, name: name }).then((data) => {
-    const success = data.success;
-    if (success) {
-      setPlayerState({
-        inParty: true,
-        partyId: partyId,
-        connectionId: data.connectionId,
-        name: name,
-      });
-    } else {
-      warnCallback("Join error: " + data.message);
-    }
-  });
-}
 
 function JoinForm(props: Props) {
   const [partyId, setPartyId] = useState("");
   const [name, setName] = useState("");
+
+  async function joinParty(partyId: string, name: string) {
+    const data = await join(partyId, name);
+    const success = data.success;
+    if (success) {
+      const newState = {
+        inParty: true,
+        partyId: partyId,
+        sessionId: data.sessionId,
+        name: name,
+      };
+      setPlayerState(newState);
+      props.setPlayerStateCallback(newState);
+    } else {
+      props.warnCallback("Join error: " + data.message);
+    }
+  }
+
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    joinParty(partyId, name, props.warnCallback);
+    joinParty(partyId, name);
   };
   if (props.visible) {
     return (

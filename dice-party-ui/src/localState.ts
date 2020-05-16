@@ -1,7 +1,7 @@
 export interface PlayerState {
   inParty: boolean;
   partyId?: string;
-  connectionId?: string;
+  sessionId?: string;
   name?: string;
 }
 

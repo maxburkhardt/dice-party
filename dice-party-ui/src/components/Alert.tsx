@@ -2,7 +2,7 @@ import React from "react";
 
 type Props = {
   visible: boolean;
-  message: string;
+  message: string | null;
 };
 
 function Alert(props: Props) {
