@@ -4,7 +4,7 @@ initializeApp({ credential: credential.applicationDefault() });
 const db = firestore();
 
 const partyCollection = db.collection("parties");
-const connectionCollection = db.collection("connections");
+const sessionCollection = db.collection("sessions");
 const rollCollection = db.collection("rolls");
 
 export async function loadParty(partyId: string): Promise<Party> {
@@ -15,17 +15,15 @@ export function saveParty(party: Party) {
   partyCollection.doc(party.id).set({ startTime: party.startTime });
 }
 
-export async function loadConnection(
-  connectionId: string
-): Promise<Connection> {
-  return (await partyCollection.doc(connectionId).get()).data() as Connection;
+export async function loadSession(sessionId: string): Promise<Session> {
+  return (await sessionCollection.doc(sessionId).get()).data() as Session;
 }
 
-export function saveConnection(connection: Connection) {
-  connectionCollection.doc(connection.id).set({
-    partyId: connection.partyId,
-    emoji: connection.emoji,
-    name: connection.name,
+export function saveSession(session: Session) {
+  sessionCollection.doc(session.id).set({
+    partyId: session.partyId,
+    emoji: session.emoji,
+    name: session.name,
   });
 }
 
@@ -39,7 +37,7 @@ export async function loadRolls(partyId: string): Promise<Roll[]> {
 
 export function saveRoll(roll: Roll) {
   rollCollection.doc(roll.id).set({
-    connectionId: roll.connectionId,
+    sessionId: roll.sessionId,
     roll: roll.roll,
     description: roll.description,
   });

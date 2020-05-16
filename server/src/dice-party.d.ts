@@ -3,7 +3,7 @@ interface Party {
   startTime: number;
 }
 
-interface Connection {
+interface Session {
   id: string;
   partyId: string;
   emoji: string;
@@ -13,7 +13,7 @@ interface Connection {
 interface Roll {
   id: string;
   partyId: string;
-  connectionId: string;
+  sessionId: string;
   roll: string;
   description: string;
 }
