@@ -1,6 +1,5 @@
-import { initializeApp, firestore, credential } from "firebase-admin";
+import { firestore } from "firebase-admin";
 
-initializeApp({ credential: credential.applicationDefault() });
 const db = firestore();
 
 const partyCollection = db.collection("parties");

@@ -1,6 +1,21 @@
-// express
+// Set up firebase
+import { initializeApp, credential, auth } from "firebase-admin";
+initializeApp({ credential: credential.applicationDefault() });
+
 import express from "express";
 import cors from "cors";
+import { v4 as uuidv4 } from "uuid";
+import { random } from "random-emoji";
+import {
+  loadParty,
+  saveParty,
+  saveSession,
+  saveRoll,
+  loadSession,
+} from "./storage";
+import { generate } from "./roll";
+
+// Set up express
 const app = express();
 app.use(express.json());
 
@@ -23,16 +38,6 @@ const corsOptions = {
   },
 };
 app.use(cors(corsOptions));
-
-// initialize storage
-import * as storage from "./storage";
-
-// init random things
-import { v4 as uuidv4 } from "uuid";
-import * as roll from "./roll";
-
-// fun
-import { random } from "random-emoji";
 
 function validatePartyId(partyId: string): boolean {
   return partyId.match(/^[a-zA-Z0-9\-]+$/) !== null;
@@ -63,16 +68,17 @@ app.post("/join", async function (request, response) {
     });
     return;
   }
-  const partyFromDb = await storage.loadParty(partyId);
+  const partyFromDb = await loadParty(partyId);
+  const firebaseToken = await auth().createCustomToken(partyId);
   if (!partyFromDb) {
-    storage.saveParty({
+    saveParty({
       id: partyId,
       startTime: Math.round(new Date().getTime() / 1000),
     });
   }
   const sessionId = uuidv4();
   const emoji = random({ count: 1 })[0].character;
-  storage.saveSession({
+  saveSession({
     id: sessionId,
     partyId: partyId,
     emoji: emoji,
@@ -81,13 +87,14 @@ app.post("/join", async function (request, response) {
   response.json({
     success: true,
     sessionId: sessionId,
+    authToken: firebaseToken,
   });
 });
 
 app.post("/roll", async function (request, response) {
-  const session = await storage.loadSession(request.body.sessionId);
-  const result = JSON.stringify(roll.generate([6, 10, 10]));
-  storage.saveRoll({
+  const session = await loadSession(request.body.sessionId);
+  const result = JSON.stringify(generate([6, 10, 10]));
+  saveRoll({
     id: uuidv4(),
     partyId: session.partyId,
     roll: result,
