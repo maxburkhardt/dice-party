@@ -11,6 +11,7 @@
     "lint": "eslint --ext \".ts\" --ignore-path ../.gitignore src",
     "lintfix": "eslint --ext \".ts\" --ignore-path ../.gitignore --fix src",
     "gcp-build": "tsc -p .",
+    "validate": "npm run prettier && npm run lint && npm run gcp-build",
     "deploy": "gcloud app deploy"
   },
   "dependencies": {

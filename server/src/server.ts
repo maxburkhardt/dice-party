@@ -4,16 +4,18 @@ import cors from "cors";
 const app = express();
 app.use(express.json());
 
-const corsOrigins = [
+const corsOrigins = new Set([
   "https://dice-party-276102.web.app",
+  "https://thedice.party",
+  "https://join.thedice.party",
   "http://localhost:3000",
-];
+]);
 const corsOptions = {
   origin: function (
     origin: string,
     callback: (error: Error | null, allowed?: boolean) => void
   ): void {
-    if (corsOrigins.indexOf(origin) !== -1) {
+    if (corsOrigins.has(origin)) {
       callback(null, true);
     } else {
       callback(new Error(`CORS rejected origin ${origin}`));
