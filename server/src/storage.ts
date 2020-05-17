@@ -12,7 +12,7 @@ export async function loadParty(partyId: string): Promise<Party> {
 }
 
 export function saveParty(party: Party) {
-  partyCollection.doc(party.id).set({ startTime: party.startTime });
+  partyCollection.doc(party.id).set(party);
 }
 
 export async function loadSession(sessionId: string): Promise<Session> {
@@ -20,11 +20,7 @@ export async function loadSession(sessionId: string): Promise<Session> {
 }
 
 export function saveSession(session: Session) {
-  sessionCollection.doc(session.id).set({
-    partyId: session.partyId,
-    emoji: session.emoji,
-    name: session.name,
-  });
+  sessionCollection.doc(session.id).set(session);
 }
 
 export async function loadRolls(partyId: string): Promise<Roll[]> {
@@ -36,9 +32,5 @@ export async function loadRolls(partyId: string): Promise<Roll[]> {
 }
 
 export function saveRoll(roll: Roll) {
-  rollCollection.doc(roll.id).set({
-    sessionId: roll.sessionId,
-    roll: roll.roll,
-    description: roll.description,
-  });
+  rollCollection.doc(roll.id).set(roll);
 }

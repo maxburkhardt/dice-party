@@ -79,14 +79,16 @@ app.post("/history", async function (request, response) {
 });
 
 app.post("/roll", async function (request, response) {
-  const session = storage.loadSession(request.body.sessionId);
+  const session = await storage.loadSession(request.body.sessionId);
   const result = JSON.stringify(roll.generate([6, 10, 10]));
   storage.saveRoll({
     id: uuidv4(),
-    partyId: (await session).partyId,
-    sessionId: request.body.sessionId,
+    partyId: session.partyId,
     roll: result,
     description: request.body.description,
+    name: session.name,
+    emoji: session.emoji,
+    timestamp: Date.now(),
   });
   response.json({ success: true });
 });

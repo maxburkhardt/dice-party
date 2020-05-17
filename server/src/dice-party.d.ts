@@ -13,9 +13,11 @@ interface Session {
 interface Roll {
   id: string;
   partyId: string;
-  sessionId: string;
   roll: string;
   description: string;
+  name: string;
+  emoji: string;
+  timestamp: number;
 }
 
 interface WsMessage {
