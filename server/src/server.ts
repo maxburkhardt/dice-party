@@ -99,6 +99,7 @@ app.post("/roll", async function (request, response) {
     partyId: session.partyId,
     roll: result,
     description: request.body.description,
+    bonus: request.body.bonus,
     name: session.name,
     emoji: session.emoji,
     timestamp: Date.now(),

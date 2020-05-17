@@ -13,6 +13,7 @@ type JoinResponse = {
 type RollRequest = {
   sessionId: string;
   description: string;
+  bonus: number;
 };
 
 type RollResponse = {
@@ -41,16 +42,10 @@ export default class PartyApi {
   }
 
   async join(request: JoinRequest): Promise<JoinResponse> {
-    return this.postData("/join", {
-      partyId: request.partyId,
-      name: request.name,
-    });
+    return this.postData("/join", request);
   }
 
   async roll(request: RollRequest): Promise<RollResponse> {
-    return this.postData("/roll", {
-      sessionId: request.sessionId,
-      description: request.description,
-    });
+    return this.postData("/roll", request);
   }
 }

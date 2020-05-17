@@ -22,6 +22,7 @@ export type Roll = {
   partyId: string;
   roll: string;
   description: string;
+  bonus: number;
   name: string;
   emoji: string;
 };

@@ -11,6 +11,7 @@ export type Props = {
 
 function RollForm(props: Props): JSX.Element {
   const [description, setDescription] = useState("");
+  const [bonus, setBonus] = useState(0);
   const partyApi = useContext(PartyApiContext);
 
   async function handleRoll(event: React.SyntheticEvent): Promise<void> {
@@ -22,7 +23,7 @@ function RollForm(props: Props): JSX.Element {
     setDescription("");
     if (props.sessionId !== undefined) {
       const sessionId = props.sessionId;
-      const response = await partyApi.roll({ sessionId, description });
+      const response = await partyApi.roll({ sessionId, description, bonus });
       if (!response.success) {
         props.warnCallback(response.message || "Unknown roll error");
       }
@@ -37,6 +38,13 @@ function RollForm(props: Props): JSX.Element {
           <br />
           Your name: {props.name}
         </p>
+        <span className="italic">Bonus:</span>
+        <input
+          name="bonus"
+          type="number"
+          value={bonus}
+          onChange={(e): void => setBonus(parseInt(e.target.value))}
+        />
         <input
           name="description"
           type="text"
