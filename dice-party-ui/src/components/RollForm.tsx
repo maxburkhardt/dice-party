@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { roll } from "../partyApi";
+import React, { useState, useContext } from "react";
+import { PartyApiContext } from "./PartyApi";
 
 export type Props = {
   visible: boolean;
@@ -11,13 +11,18 @@ export type Props = {
 
 function RollForm(props: Props): JSX.Element {
   const [description, setDescription] = useState("");
+  const partyApi = useContext(PartyApiContext);
 
   async function handleRoll(event: React.SyntheticEvent): Promise<void> {
     event.preventDefault();
+    if (partyApi === null) {
+      console.log("Couldn't roll because party API client is null");
+      return;
+    }
     setDescription("");
     if (props.sessionId !== undefined) {
       const sessionId = props.sessionId;
-      const response = await roll({ sessionId, description });
+      const response = await partyApi.roll({ sessionId, description });
       if (!response.success) {
         props.warnCallback(response.message || "Unknown roll error");
       }

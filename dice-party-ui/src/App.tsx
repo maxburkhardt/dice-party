@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./App.css";
-import { getPlayerStateFromLocal } from "./localState";
+import {
+  getPlayerStateFromLocal,
+  PlayerState,
+  setPlayerStateInLocal,
+} from "./localState";
 import Alert from "./components/Alert";
 import JoinForm from "./components/JoinForm";
 import RollForm from "./components/RollForm";
 import RollLog from "./components/RollLog";
 import LeaveForm from "./components/LeaveForm";
 import ChangePartyModal from "./components/ChangePartyModal";
+import { FirebaseContext } from "./components/Firebase";
 
 type AlertData = {
   message: string | null;
@@ -21,6 +26,7 @@ function App(): JSX.Element {
   const [alert, setAlert] = useState({ message: null } as AlertData);
   const [urlPartyId, setUrlPartyId] = useState(partyIdFromUrl);
   const [changePartyModalVisible, setChangePartyModalVisible] = useState(true);
+  const firebase = useContext(FirebaseContext);
 
   const handleStorageUpdate = (): void =>
     setPlayerState(getPlayerStateFromLocal());
@@ -34,11 +40,22 @@ function App(): JSX.Element {
   function leaveParty(): void {
     window.localStorage.clear();
     setPlayerState(getPlayerStateFromLocal());
+    firebase?.disconnectRollListener();
+    firebase?.signOut();
   }
 
   function setPartyIdInUrl(partyId: string): void {
     window.history.pushState({}, "", `/?partyId=${partyId}`);
     setUrlPartyId(partyId);
+  }
+
+  async function setPlayerStateCallback(state: PlayerState): Promise<void> {
+    if (state.authToken) {
+      await firebase?.authenticate(state.authToken);
+    }
+    setPlayerState(state);
+    setPlayerStateInLocal(state);
+    setPartyIdInUrl(state.partyId || "");
   }
 
   return (
@@ -50,9 +67,8 @@ function App(): JSX.Element {
       <JoinForm
         visible={!playerState.inParty}
         warnCallback={alertCallback}
-        setPlayerStateCallback={setPlayerState}
+        setPlayerStateCallback={setPlayerStateCallback}
         partyIdFromUrl={urlPartyId}
-        setPartyIdInUrlCallback={setPartyIdInUrl}
       ></JoinForm>
       <RollForm
         visible={playerState.inParty}

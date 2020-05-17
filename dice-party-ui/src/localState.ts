@@ -3,6 +3,7 @@ export interface PlayerState {
   partyId?: string;
   sessionId?: string;
   name?: string;
+  authToken?: string;
 }
 
 export function getPlayerStateFromLocal(): PlayerState {

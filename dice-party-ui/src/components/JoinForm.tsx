@@ -1,21 +1,25 @@
-import React, { useState } from "react";
-import { setPlayerStateInLocal, PlayerState } from "../localState";
-import { join } from "../partyApi";
+import React, { useState, useContext } from "react";
+import { PlayerState } from "../localState";
+import { PartyApiContext } from "./PartyApi";
 
 export type Props = {
   visible: boolean;
   warnCallback: (message: string) => void;
   setPlayerStateCallback: (newState: PlayerState) => void;
   partyIdFromUrl: string | null;
-  setPartyIdInUrlCallback: (partyId: string) => void;
 };
 
 function JoinForm(props: Props): JSX.Element {
   const [partyId, setPartyId] = useState(props.partyIdFromUrl || "");
   const [name, setName] = useState("");
+  const partyApi = useContext(PartyApiContext);
 
   async function joinParty(partyId: string, name: string): Promise<void> {
-    const data = await join({ partyId, name });
+    if (partyApi === null) {
+      console.log("Couldn't join party because party API client is null");
+      return;
+    }
+    const data = await partyApi.join({ partyId, name });
     const success = data.success;
     if (success) {
       const newState = {
@@ -23,10 +27,9 @@ function JoinForm(props: Props): JSX.Element {
         partyId: partyId,
         sessionId: data.sessionId,
         name: name,
+        authToken: data.authToken,
       };
-      setPlayerStateInLocal(newState);
       props.setPlayerStateCallback(newState);
-      props.setPartyIdInUrlCallback(partyId);
     } else {
       props.warnCallback("Join error: " + data.message);
     }

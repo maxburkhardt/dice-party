@@ -1,22 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { FirebaseContext } from "./Firebase";
-import {
-  QuerySnapshot,
-  DocumentData,
-  QueryDocumentSnapshot,
-} from "@firebase/firestore-types";
+import { Roll } from "./Firebase/firebase";
 
 export type Props = {
   partyId?: string;
-};
-
-export type Roll = {
-  id: string;
-  partyId: string;
-  roll: string;
-  description: string;
-  name: string;
-  emoji: string;
 };
 
 function RollLog(props: Props): JSX.Element {
@@ -38,14 +25,7 @@ function RollLog(props: Props): JSX.Element {
     );
   }
 
-  function rollUpdater(snapshot: QuerySnapshot<DocumentData>): void {
-    if (!snapshot.size) {
-      return;
-    }
-    const rolls: Roll[] = [];
-    snapshot.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
-      rolls.push(doc.data() as Roll);
-    });
+  function rollUpdater(rolls: Roll[]): void {
     setRolls(rolls);
   }
 
