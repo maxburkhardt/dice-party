@@ -11,7 +11,7 @@ export async function loadParty(partyId: string): Promise<Party> {
   return (await partyCollection.doc(partyId).get()).data() as Party;
 }
 
-export function saveParty(party: Party) {
+export function saveParty(party: Party): void {
   partyCollection.doc(party.id).set(party);
 }
 
@@ -19,7 +19,7 @@ export async function loadSession(sessionId: string): Promise<Session> {
   return (await sessionCollection.doc(sessionId).get()).data() as Session;
 }
 
-export function saveSession(session: Session) {
+export function saveSession(session: Session): void {
   sessionCollection.doc(session.id).set(session);
 }
 
@@ -31,6 +31,6 @@ export async function loadRolls(partyId: string): Promise<Roll[]> {
   return rolls;
 }
 
-export function saveRoll(roll: Roll) {
+export function saveRoll(roll: Roll): void {
   rollCollection.doc(roll.id).set(roll);
 }

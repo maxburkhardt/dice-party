@@ -27,10 +27,6 @@ function validateName(name: string): boolean {
   return name.length >= 1;
 }
 
-function message(type: string, content: MessageData): string {
-  return JSON.stringify({ type: type, data: content });
-}
-
 app.get("/", function (request, response) {
   response.send("Welcome to the dice party!");
 });
@@ -71,11 +67,6 @@ app.post("/join", async function (request, response) {
     success: true,
     sessionId: sessionId,
   });
-});
-
-app.post("/history", async function (request, response) {
-  const partyId = request.body.partyId;
-  response.json({ success: true, rolls: await storage.loadRolls(partyId) });
 });
 
 app.post("/roll", async function (request, response) {
