@@ -10,6 +10,7 @@
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
+    "firebase": "^7.14.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
@@ -38,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "@firebase/firestore-types": "^1.10.1",
     "prettier": "^2.0.5"
   }
 }

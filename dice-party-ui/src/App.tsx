@@ -18,11 +18,9 @@ function App() {
   const handleStorageUpdate = () => setPlayerState(getPlayerState());
   const alertCallback = (message: string) => setAlert({ message: message });
 
-  const rollLog: JSX.Element[] = [];
-
   useEffect(() => {
     window.addEventListener("storage", () => handleStorageUpdate);
-  });
+  }, []);
 
   return (
     <div className="container">
@@ -42,7 +40,7 @@ function App() {
         sessionId={playerState.sessionId || ""}
         warnCallback={alertCallback}
       ></RollForm>
-      <RollLog entries={rollLog}></RollLog>
+      <RollLog partyId={playerState.partyId || ""}></RollLog>
       <LeaveForm
         visible={playerState.inParty}
         setPlayerStateCallback={setPlayerState}

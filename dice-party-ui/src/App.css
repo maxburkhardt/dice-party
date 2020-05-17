@@ -48,7 +48,7 @@ p {
   padding: 5px;
 }
 
-#rollLog {
+.rollLog {
   overflow: scroll;
   flex: 1 1 auto;
   min-height: 0;
