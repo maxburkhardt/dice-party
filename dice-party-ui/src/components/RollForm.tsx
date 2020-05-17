@@ -14,6 +14,7 @@ function RollForm(props: Props): JSX.Element {
 
   async function handleRoll(event: React.SyntheticEvent): Promise<void> {
     event.preventDefault();
+    setDescription("");
     if (props.sessionId !== undefined) {
       const sessionId = props.sessionId;
       const response = await roll({ sessionId, description });
