@@ -1,16 +1,14 @@
 import React from "react";
-import { PlayerState, getPlayerState } from "../localState";
 
 export type Props = {
   visible: boolean;
-  setPlayerStateCallback: (newState: PlayerState) => void;
+  leavePartyCallback: () => void;
 };
 
 function LeaveForm(props: Props): JSX.Element {
   function leave(event: React.SyntheticEvent): void {
     event.preventDefault();
-    window.localStorage.clear();
-    props.setPlayerStateCallback(getPlayerState());
+    props.leavePartyCallback();
   }
 
   if (props.visible) {

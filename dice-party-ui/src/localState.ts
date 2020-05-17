@@ -5,7 +5,7 @@ export interface PlayerState {
   name?: string;
 }
 
-export function getPlayerState(): PlayerState {
+export function getPlayerStateFromLocal(): PlayerState {
   const state = window.localStorage.getItem("partyState");
   if (state) {
     return JSON.parse(state);
@@ -14,6 +14,6 @@ export function getPlayerState(): PlayerState {
   }
 }
 
-export function setPlayerState(state: PlayerState): void {
+export function setPlayerStateInLocal(state: PlayerState): void {
   window.localStorage.setItem("partyState", JSON.stringify(state));
 }

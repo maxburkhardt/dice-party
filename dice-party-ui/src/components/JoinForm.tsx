@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { setPlayerState, PlayerState } from "../localState";
+import { setPlayerStateInLocal, PlayerState } from "../localState";
 import { join } from "../partyApi";
 
 export type Props = {
   visible: boolean;
   warnCallback: (message: string) => void;
   setPlayerStateCallback: (newState: PlayerState) => void;
+  partyIdFromUrl: string | null;
+  setPartyIdInUrlCallback: (partyId: string) => void;
 };
 
 function JoinForm(props: Props): JSX.Element {
-  const [partyId, setPartyId] = useState("");
+  const [partyId, setPartyId] = useState(props.partyIdFromUrl || "");
   const [name, setName] = useState("");
 
   async function joinParty(partyId: string, name: string): Promise<void> {
@@ -22,8 +24,9 @@ function JoinForm(props: Props): JSX.Element {
         sessionId: data.sessionId,
         name: name,
       };
-      setPlayerState(newState);
+      setPlayerStateInLocal(newState);
       props.setPlayerStateCallback(newState);
+      props.setPartyIdInUrlCallback(partyId);
     } else {
       props.warnCallback("Join error: " + data.message);
     }
