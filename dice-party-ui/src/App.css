@@ -61,7 +61,7 @@ form {
   display: inline-block;
   width: 100%;
   border-radius: 3px;
-  background-image: url("https://cdn.glitch.com/cd0a012a-fb94-4ade-a3b2-9e9cbb878495%2Ffull-bloom.png?v=1585105784727");
+  background-image: url("/full-bloom.png");
   background-repeat: repeat;
 }
 
