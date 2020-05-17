@@ -11,12 +11,13 @@ type AlertData = {
   message: string | null;
 };
 
-function App() {
+function App(): JSX.Element {
   const [playerState, setPlayerState] = useState(getPlayerState());
   const [alert, setAlert] = useState({ message: null } as AlertData);
 
-  const handleStorageUpdate = () => setPlayerState(getPlayerState());
-  const alertCallback = (message: string) => setAlert({ message: message });
+  const handleStorageUpdate = (): void => setPlayerState(getPlayerState());
+  const alertCallback = (message: string): void =>
+    setAlert({ message: message });
 
   useEffect(() => {
     window.addEventListener("storage", () => handleStorageUpdate);
@@ -35,12 +36,12 @@ function App() {
       ></JoinForm>
       <RollForm
         visible={playerState.inParty}
-        partyId={playerState.partyId || ""}
-        name={playerState.name || ""}
-        sessionId={playerState.sessionId || ""}
+        partyId={playerState.partyId}
+        name={playerState.name}
+        sessionId={playerState.sessionId}
         warnCallback={alertCallback}
       ></RollForm>
-      <RollLog partyId={playerState.partyId || ""}></RollLog>
+      <RollLog partyId={playerState.partyId}></RollLog>
       <LeaveForm
         visible={playerState.inParty}
         setPlayerStateCallback={setPlayerState}

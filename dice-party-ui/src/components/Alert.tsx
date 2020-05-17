@@ -5,7 +5,7 @@ type Props = {
   message: string | null;
 };
 
-function Alert(props: Props) {
+function Alert(props: Props): JSX.Element {
   if (props.visible) {
     return <div className="alert">{props.message}</div>;
   } else {

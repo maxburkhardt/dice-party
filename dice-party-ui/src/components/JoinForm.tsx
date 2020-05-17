@@ -8,12 +8,12 @@ export type Props = {
   setPlayerStateCallback: (newState: PlayerState) => void;
 };
 
-function JoinForm(props: Props) {
+function JoinForm(props: Props): JSX.Element {
   const [partyId, setPartyId] = useState("");
   const [name, setName] = useState("");
 
-  async function joinParty(partyId: string, name: string) {
-    const data = await join(partyId, name);
+  async function joinParty(partyId: string, name: string): Promise<void> {
+    const data = await join({ partyId, name });
     const success = data.success;
     if (success) {
       const newState = {
@@ -29,10 +29,11 @@ function JoinForm(props: Props) {
     }
   }
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
     joinParty(partyId, name);
   };
+
   if (props.visible) {
     return (
       <form>
@@ -45,13 +46,13 @@ function JoinForm(props: Props) {
           type="text"
           value={partyId}
           placeholder="Party identifier"
-          onChange={(e) => setPartyId(e.target.value)}
+          onChange={(e): void => setPartyId(e.target.value)}
         />
         <input
           type="text"
           value={name}
           placeholder="Your name"
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e): void => setName(e.target.value)}
         />
         <button type="submit" onClick={handleSubmit}>
           Party Up!

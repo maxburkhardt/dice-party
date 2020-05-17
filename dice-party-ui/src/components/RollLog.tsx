@@ -7,7 +7,7 @@ import {
 } from "@firebase/firestore-types";
 
 export type Props = {
-  partyId: string;
+  partyId?: string;
 };
 
 export type Roll = {
@@ -19,8 +19,10 @@ export type Roll = {
   emoji: string;
 };
 
-function RollLog(props: Props) {
+function RollLog(props: Props): JSX.Element {
   const defaultRolls: Roll[] = [];
+  const [rolls, setRolls] = useState(defaultRolls);
+  const firebase = useContext(FirebaseContext);
 
   function renderRoll(roll: Roll): JSX.Element {
     const rollString = JSON.parse(roll.roll)
@@ -36,7 +38,7 @@ function RollLog(props: Props) {
     );
   }
 
-  function rollUpdater(snapshot: QuerySnapshot<DocumentData>) {
+  function rollUpdater(snapshot: QuerySnapshot<DocumentData>): void {
     if (!snapshot.size) {
       return;
     }
@@ -47,11 +49,8 @@ function RollLog(props: Props) {
     setRolls(rolls);
   }
 
-  const [rolls, setRolls] = useState(defaultRolls);
-  const firebase = useContext(FirebaseContext);
-
   useEffect(() => {
-    if (props.partyId !== "") {
+    if (props.partyId !== undefined) {
       firebase?.configureRollListener(props.partyId, rollUpdater);
     } else {
       setRolls([]);

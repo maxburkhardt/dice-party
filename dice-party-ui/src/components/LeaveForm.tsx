@@ -6,8 +6,8 @@ export type Props = {
   setPlayerStateCallback: (newState: PlayerState) => void;
 };
 
-function LeaveForm(props: Props) {
-  function leave(event: React.SyntheticEvent) {
+function LeaveForm(props: Props): JSX.Element {
+  function leave(event: React.SyntheticEvent): void {
     event.preventDefault();
     window.localStorage.clear();
     props.setPlayerStateCallback(getPlayerState());

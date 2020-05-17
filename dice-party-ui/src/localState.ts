@@ -14,6 +14,6 @@ export function getPlayerState(): PlayerState {
   }
 }
 
-export function setPlayerState(state: PlayerState) {
+export function setPlayerState(state: PlayerState): void {
   window.localStorage.setItem("partyState", JSON.stringify(state));
 }

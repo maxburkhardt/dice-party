@@ -3,20 +3,23 @@ import { roll } from "../partyApi";
 
 export type Props = {
   visible: boolean;
-  partyId: string;
-  sessionId: string;
-  name: string;
+  partyId?: string;
+  sessionId?: string;
+  name?: string;
   warnCallback: (message: string) => void;
 };
 
-function RollForm(props: Props) {
+function RollForm(props: Props): JSX.Element {
   const [description, setDescription] = useState("");
 
-  async function handleRoll(event: React.SyntheticEvent) {
+  async function handleRoll(event: React.SyntheticEvent): Promise<void> {
     event.preventDefault();
-    const response = await roll(props.sessionId, description);
-    if (!response.success) {
-      props.warnCallback(response.message || "Unknown roll error");
+    if (props.sessionId !== undefined) {
+      const sessionId = props.sessionId;
+      const response = await roll({ sessionId, description });
+      if (!response.success) {
+        props.warnCallback(response.message || "Unknown roll error");
+      }
     }
   }
 
@@ -35,7 +38,7 @@ function RollForm(props: Props) {
           placeholder="Roll description"
           autoFocus={true}
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e): void => setDescription(e.target.value)}
         />
         <button type="submit" onClick={handleRoll}>
           Roll!

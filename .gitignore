@@ -4,7 +4,7 @@
 /dice-party-ui/coverage
 /dice-party-ui/build
 .pnp.js
-*.js
+/server/src/*.js
 *.js.map
 *.code-workspace
 

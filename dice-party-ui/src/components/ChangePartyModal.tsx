@@ -5,7 +5,7 @@ export type Props = {
   modalText: string;
 };
 
-function ChangePartyModal(props: Props) {
+function ChangePartyModal(props: Props): JSX.Element {
   if (props.visible) {
     return (
       <div className="changePartyModalBackground">

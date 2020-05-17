@@ -20,14 +20,14 @@ export default class Firebase {
     this.db = firebase.firestore();
   }
 
-  configureRollListener = (
+  configureRollListener(
     partyId: string,
     renderer: (snapshot: QuerySnapshot<DocumentData>) => void
-  ) => {
+  ): void {
     this.db
       .collection("rolls")
       .where("partyId", "==", partyId)
       .orderBy("timestamp", "desc")
       .onSnapshot(renderer);
-  };
+  }
 }

@@ -1,7 +1,17 @@
+type JoinRequest = {
+  partyId: string;
+  name: string;
+};
+
 type JoinResponse = {
   success: boolean;
   sessionId?: string;
   message?: string;
+};
+
+type RollRequest = {
+  sessionId: string;
+  description: string;
 };
 
 type RollResponse = {
@@ -9,27 +19,14 @@ type RollResponse = {
   message?: string;
 };
 
-export async function join(
-  partyId: string,
-  name: string
-): Promise<JoinResponse> {
-  return postData("/join", {
-    partyId: partyId,
-    name: name,
-  });
+type Request = JoinRequest | RollRequest;
+type Response = JoinResponse | RollResponse;
+
+function constructUrl(path: string): string {
+  return `https://dice-party-276102.wl.r.appspot.com${path}`;
 }
 
-export async function roll(
-  sessionId: string,
-  description: string
-): Promise<RollResponse> {
-  return postData("/roll", {
-    sessionId: sessionId,
-    description: description,
-  });
-}
-
-async function postData(path: string, data: any) {
+async function postData(path: string, data: Request): Promise<Response> {
   return fetch(constructUrl(path), {
     method: "POST",
     headers: {
@@ -41,6 +38,16 @@ async function postData(path: string, data: any) {
   });
 }
 
-function constructUrl(path: string) {
-  return `https://dice-party-276102.wl.r.appspot.com${path}`;
+export async function join(request: JoinRequest): Promise<JoinResponse> {
+  return postData("/join", {
+    partyId: request.partyId,
+    name: request.name,
+  });
+}
+
+export async function roll(request: RollRequest): Promise<RollResponse> {
+  return postData("/roll", {
+    sessionId: request.sessionId,
+    description: request.description,
+  });
 }
