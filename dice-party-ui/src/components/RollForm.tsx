@@ -9,6 +9,14 @@ export type Props = {
   warnCallback: (message: string) => void;
 };
 
+function generatePartyLink(partyId?: string): JSX.Element {
+  if (partyId) {
+    return <a href={`${window.origin}/?partyId=${partyId}`}>{partyId}</a>;
+  } else {
+    return <span></span>;
+  }
+}
+
 function RollForm(props: Props): JSX.Element {
   const [description, setDescription] = useState("");
   const [bonus, setBonus] = useState(0);
@@ -34,7 +42,7 @@ function RollForm(props: Props): JSX.Element {
     return (
       <form>
         <p>
-          Current party: {props.partyId}
+          Current party: {generatePartyLink(props.partyId)}
           <br />
           Your name: {props.name}
         </p>
