@@ -62,7 +62,11 @@ function RollLog(props: Props): JSX.Element {
     }
   }, [firebase, props.partyId]);
 
-  return <div className="rollLog">{rolls.map(renderRoll)}</div>;
+  if (props.partyId) {
+    return <div className="rollLog">{rolls.map(renderRoll)}</div>;
+  } else {
+    return <div></div>;
+  }
 }
 
 export default RollLog;

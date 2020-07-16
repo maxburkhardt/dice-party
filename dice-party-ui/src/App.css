@@ -49,14 +49,13 @@ p {
 }
 
 .rollLog {
-  overflow: scroll;
+  overflow-y: scroll;
   flex: 1 1 auto;
   min-height: 0;
   padding: 0 10px;
 }
 
 form {
-  margin-bottom: 25px;
   padding: 15px;
   display: inline-block;
   width: 100%;
